@@ -1,23 +1,13 @@
-def parse_record(line: str) -> dict:
-    parts = line.split(";")
+def read_valid(lines: list[str]) -> list[dict]:
+    records = []
 
-    if len(parts) != 3:
-        raise ValueError("Invalid record")
+    for line in lines:
+        if not line.strip():
+            continue
 
-    city, temp, date = parts
-    city = city.strip()
-    date = date.strip()
+        try:
+            records.append(parse_record(line))
+        except ValueError:
+            continue
 
-    if not city or not date:
-        raise ValueError("Empty city or date")
-
-    try:
-        temp = float(temp)
-    except ValueError:
-        raise ValueError("Invalid temperature")
-
-    return {
-        "city": city,
-        "temperature": temp,
-        "date": date
-    }
+    return records
