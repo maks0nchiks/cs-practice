@@ -7,7 +7,7 @@ def csv_to_records(text: str) -> list[dict]:
     if not lines:
         return []
 
-    headers = lines[0].split(',')
+    headers = [item.strip() for item in lines[0].split(',')]
     values = lines[1:]
 
     result = []
@@ -16,7 +16,7 @@ def csv_to_records(text: str) -> list[dict]:
         if not value:
             continue
 
-        index_city = value.split(',')
+        index_city = [item.strip() for item in value.split(',')]
         record = dict(zip(headers, index_city))
         result.append(record)
 
@@ -35,7 +35,7 @@ def convert(value: str):
         return int(value)
     except ValueError:
         try:
-            return float(value)
+            return float(value.replace(',', '.'))
         except ValueError:
             return value
 
