@@ -35,7 +35,7 @@ def convert(value: str):
         return int(value)
     except ValueError:
         try:
-            return float(value)
+            return float(value.replace(',', '.'))
         except ValueError:
             return value
 
